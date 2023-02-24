@@ -9,7 +9,7 @@ function App() {
   const [tenzies, setTenzies] = React.useState(false)
 
   const [highScore, setHighScore] = React.useState(
-    () => JSON.parse(localStorage.getItem("highScore")) || " "
+    () => JSON.parse(localStorage.getItem("highScore")) || 1000000
   ) 
   const [points, setPoints] = React.useState(0)
 
@@ -78,6 +78,7 @@ function App() {
     if(tenzies && highScore > points){
       localStorage.setItem("highScore", JSON.stringify(points))
       setHighScore(points)
+      setPoints(0)
     }
   },[tenzies])
       
@@ -87,7 +88,7 @@ function App() {
       <div className="title-block">
         <h1 className="title">{tenzies ?  "You Won!" : "Tenzies"}</h1>
         <p className={tenzies? "points" : "instructions"} >{tenzies ? `Your Points : ${points}` : "Roll until all dice are the same. Click each die to freeze it at its current value between rolls."}</p>
-        {highScore!==" " && <p className="highScore">HighScore : {highScore}</p>}
+        <p className="highScore">HighScore : {highScore===1000000 ? "0" : highScore}</p>
       </div>
       <div className="die-container">
         {diceElements}
